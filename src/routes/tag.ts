@@ -1,9 +1,12 @@
-import { createTag, getTag } from "../controllers/tag";
+import { createTag, deleteTag, getAllTag, getTag, updateTag } from "../controllers/tag";
 import express from 'express';
 
 const Router = express.Router();
 
 Router.post('/newtag', createTag);
-Router.get('/tag/:tagId', getTag);
+Router.patch('/updatetags/:tagId', updateTag);
+Router.get('/tags/:tagId', getTag);
+Router.get('/tags/', getAllTag);
+Router.delete('/deletetags/:tagId', deleteTag)
 
 export default Router;

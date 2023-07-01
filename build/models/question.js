@@ -8,9 +8,9 @@ const config_1 = __importDefault(require("../config/config"));
 const tag_1 = __importDefault(require("./tag"));
 //Define the Question model
 class Question extends sequelize_1.Model {
-    constructor(values, option) {
-        super(values, Object.assign(Object.assign({}, option), { sequelize: config_1.default }));
-    }
+    // constructor(values?: any, option?: any) {
+    //     super(values, { ...option, sequelize });
+    // }
     static associate(models) {
         Question.belongsTo(models.Tag, { foreignKey: 'tagId' });
     }

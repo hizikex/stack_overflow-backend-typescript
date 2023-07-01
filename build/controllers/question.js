@@ -26,6 +26,7 @@ const createQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
             tagId: Number(tagId)
         };
         const tagObj = yield tag_1.default.findByPk(tagId);
+        console.log(tagObj);
         if (tagObj) {
             const createdQuestion = yield question_1.default.create(questionData);
             if (!exports.createQuestion) {
@@ -78,7 +79,7 @@ const getQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getQuestion = getQuestion;
 const getAllQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const allQuestions = yield question_1.default.findAll();
+        const allQuestions = yield question_1.default.findAll({ attributes: ['id', 'title', 'body', 'authorId', 'tagId'] });
         console.log(allQuestions);
         if (!allQuestions) {
             res.status(404).json({
@@ -127,10 +128,6 @@ const updateQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
     try {
         const { questionId } = req.params;
         const { title, body, authorId, tagId } = req.body;
-        let viewsData = {
-            edit: true,
-            pageTitle: 'Edit Question'
-        };
         const questionData = {
             title,
             body,
@@ -144,7 +141,7 @@ const updateQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
         });
         if (updatedQuestion[0] === 0) {
             res.status(404).json({
-                message: `Question Not Found`
+                message: `No Question Found`
             });
         }
         else {

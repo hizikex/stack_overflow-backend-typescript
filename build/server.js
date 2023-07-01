@@ -9,6 +9,7 @@ const express_1 = __importDefault(require("express"));
 const user_1 = __importDefault(require("./routes/user"));
 const tag_1 = __importDefault(require("./routes/tag"));
 const question_1 = __importDefault(require("./routes/question"));
+const answer_1 = __importDefault(require("./routes/answer"));
 const config_1 = __importDefault(require("./config/config"));
 const PORT = process.env.PORT;
 const app = (0, express_1.default)();
@@ -16,6 +17,7 @@ app.use(express_1.default.json());
 app.use('/api/v1', user_1.default);
 app.use('/api/v1', tag_1.default);
 app.use('/api/v1', question_1.default);
+app.use('/api/v1', answer_1.default);
 config_1.default.authenticate().then(() => {
     console.log('Connection has been established successfully.');
 }).then(() => {

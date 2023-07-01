@@ -15,9 +15,9 @@ class Question extends Model <QuestionTraits, QuestionTraitsCreation>{
     public createdAt!: Date;
     public tags?: TagTraits[];
 
-    constructor(values?: any, option?: any) {
-        super(values, { ...option, sequelize });
-    }
+    // constructor(values?: any, option?: any) {
+    //     super(values, { ...option, sequelize });
+    // }
 
     public static associate(models: any): void {
         Question.belongsTo(models.Tag, { foreignKey: 'tagId' });

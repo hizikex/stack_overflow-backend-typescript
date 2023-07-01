@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import Question from "../models/question";
 import Tag from "../models/tag";
-import { getAttributes } from "sequelize-typescript";
 
 export const createQuestion = async (req:Request, res: Response) => {
     const tagId = req.params.tagId;
@@ -23,6 +22,8 @@ export const createQuestion = async (req:Request, res: Response) => {
         };
 
         const tagObj = await Tag.findByPk(tagId);
+        console.log(tagObj);
+        
         if (tagObj) {
             const createdQuestion = await Question.create(questionData)
             if (!createQuestion) {
@@ -72,7 +73,7 @@ export const getQuestion = async (req:Request, res:Response) => {
 
 export const getAllQuestions = async (req:Request, res: Response) => {
     try {
-        const allQuestions = await Question.findAll();
+        const allQuestions = await Question.findAll({attributes: ['id', 'title', 'body', 'authorId', 'tagId']});
         console.log(allQuestions);
         
         if (!allQuestions) {
@@ -119,11 +120,6 @@ export const updateQuestion = async (req:Request, res: Response) => {
         const {questionId} = req.params;
         const {title, body, authorId, tagId} = req.body;
 
-        let viewsData = {
-            edit: true,
-            pageTitle: 'Edit Question'
-        };
-
         type QuestionTrait = {
             //All traits here are optional to allow partial update
             title?: string;
@@ -147,7 +143,7 @@ export const updateQuestion = async (req:Request, res: Response) => {
 
         if (updatedQuestion[0] === 0) {
             res.status(404).json({
-                message: `Question Not Found`
+                message: `No Question Found`
             });
         } else {
             res.status(201).json({
