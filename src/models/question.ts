@@ -15,10 +15,6 @@ class Question extends Model <QuestionTraits, QuestionTraitsCreation>{
     public createdAt!: Date;
     public tags?: TagTraits[];
 
-    // constructor(values?: any, option?: any) {
-    //     super(values, { ...option, sequelize });
-    // }
-
     public static associate(models: any): void {
         Question.belongsTo(models.Tag, { foreignKey: 'tagId' });
       }
@@ -42,18 +38,18 @@ Question.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    tagId: {
-        type: DataTypes.INTEGER,
-        allowNull: true, // Make it non-nullable
-        references: {
-          model: 'tags', // Assuming the name of the Tag model is 'Tag' and the table name is 'tags'
-          key: 'id'
-        }
-      },
     // tagId: {
     //     type: DataTypes.INTEGER,
-    //     allowNull: true
-    // },
+    //     allowNull: true, // Make it non-nullable
+    //     references: {
+    //       model: 'tags', // Assuming the name of the Tag model is 'Tag' and the table name is 'tags'
+    //       key: 'id'
+    //     }
+    //   },
+    tagId: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
     createdAt: {
         type: DataTypes.DATE,
         allowNull: false,

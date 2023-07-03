@@ -1,8 +1,9 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from "../config/config";
 import AnswerTraits from "../interfaces/answer";
+import Question from "./question";
 
-type AnswerTraitsCreation = Optional<AnswerTraits, 'id'| 'createdAt'| 'updatedAt'| 'questionId'>
+type AnswerTraitsCreation = Optional<AnswerTraits, 'id'| 'createdAt'| 'updatedAt'>
 
 class Answer extends Model <AnswerTraits, AnswerTraitsCreation>{
   public id!: number;
@@ -36,7 +37,10 @@ Answer.init(
     },
     questionId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      references: {
+        model: 'answers',
+        key: 'id'
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -55,5 +59,16 @@ Answer.init(
     tableName: 'answers'
   }
 );
+
+//Set up association between Answer and Question model
+Answer.belongsTo(Question, {
+  foreignKey: 'questionId',
+  onDelete: 'CASCADE', // If question is deleted, it deletes its associated answers
+});
+
+// If you want to define the association from the Question model as well:
+Question.hasMany(Answer, {
+  foreignKey: 'questionId',
+});
 
 export default Answer;

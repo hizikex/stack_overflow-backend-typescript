@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const config_1 = __importDefault(require("../config/config"));
+const question_1 = __importDefault(require("./question"));
 class Answer extends sequelize_1.Model {
     //Association defined here
     static associate(models) {
@@ -27,7 +28,10 @@ Answer.init({
     },
     questionId: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        references: {
+            model: 'answers',
+            key: 'id'
+        }
     },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
@@ -43,5 +47,14 @@ Answer.init({
     sequelize: config_1.default,
     modelName: "Answer",
     tableName: 'answers'
+});
+//Set up association between Answer and Question model
+Answer.belongsTo(question_1.default, {
+    foreignKey: 'questionId',
+    onDelete: 'CASCADE', // If question is deleted, it deletes its associated answers
+});
+// If you want to define the association from the Question model as well:
+question_1.default.hasMany(Answer, {
+    foreignKey: 'questionId',
 });
 exports.default = Answer;

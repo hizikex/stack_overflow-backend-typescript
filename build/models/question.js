@@ -8,9 +8,6 @@ const config_1 = __importDefault(require("../config/config"));
 const tag_1 = __importDefault(require("./tag"));
 //Define the Question model
 class Question extends sequelize_1.Model {
-    // constructor(values?: any, option?: any) {
-    //     super(values, { ...option, sequelize });
-    // }
     static associate(models) {
         Question.belongsTo(models.Tag, { foreignKey: 'tagId' });
     }
@@ -33,18 +30,18 @@ Question.init({
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
     },
-    tagId: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'tags',
-            key: 'id'
-        }
-    },
     // tagId: {
     //     type: DataTypes.INTEGER,
-    //     allowNull: true
-    // },
+    //     allowNull: true, // Make it non-nullable
+    //     references: {
+    //       model: 'tags', // Assuming the name of the Tag model is 'Tag' and the table name is 'tags'
+    //       key: 'id'
+    //     }
+    //   },
+    tagId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true
+    },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
