@@ -30,17 +30,13 @@ Question.init({
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
     },
-    // tagId: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: true, // Make it non-nullable
-    //     references: {
-    //       model: 'tags', // Assuming the name of the Tag model is 'Tag' and the table name is 'tags'
-    //       key: 'id'
-    //     }
-    //   },
     tagId: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: true
+        allowNull: true,
+        references: {
+            model: 'tags',
+            key: 'id'
+        }
     },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
@@ -54,13 +50,16 @@ Question.init({
     }
 }, {
     sequelize: config_1.default,
-    modelName: 'questions'
+    modelName: 'questions',
+    indexes: [
+        {
+            fields: ['body']
+        }
+    ]
 });
 // Define association between Question and Tag
 Question.belongsTo(tag_1.default);
 tag_1.default.hasMany(Question, {
     foreignKey: 'tagId',
 });
-//   Question.belongsTo(Tag, { as: 'tags', foreignKey: 'questionId' });
-//   Tag.hasMany(Question, { as: 'questions', foreignKey: 'questionId' });
 exports.default = Question;

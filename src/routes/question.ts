@@ -1,5 +1,6 @@
 import express from "express";
 import { createQuestion, deleteQuestion, getAllQuestions, getQuestion, updateQuestion } from "../controllers/question";
+import { searchQuestions } from "../controllers/searchResult";
 
 const Router = express.Router();
 
@@ -9,6 +10,6 @@ Router.get('/question/:questionId', getQuestion)
 Router.get('/question', getAllQuestions)
 Router.delete('/question/:questionId', deleteQuestion)
 Router.patch('/question/:questionId', updateQuestion);
-// Router.patch('/questions/:questionId', editQuestion);
+Router.get('/questions/searchresult', searchQuestions);
 
 export default Router;

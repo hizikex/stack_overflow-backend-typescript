@@ -78,6 +78,29 @@ export const getAnswersByQuestionId = async (req: Request, res: Response) => {
     };
 };
 
+export const getAnswerUsingIndex = async (req:Request, res: Response) => {
+    try {
+        const {body} = req.query;
+        const indexResult = await Answer.findAll({i});
+        console.log(indexResult);
+        
+        if (!indexResult) {
+            res.status(404).json({
+                message: `Result not found`
+            })
+        } else {
+            res.status(200).json({
+                message: `Searched result`,
+                data: indexResult
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: `Internal Server error, ${error}`
+        })
+    }
+}
+
 export const updateAnswer = async (req:Request, res: Response) => {
     const {answerId} = req.params;
     try {
@@ -118,7 +141,7 @@ export const updateAnswer = async (req:Request, res: Response) => {
     }
 };
 
-export const deleteAnswer = async (req: Request, res: Response) {
+export const deleteAnswer = async (req: Request, res: Response) => {
     const {answerId} = req.params;
     try {
         const answer = await Answer.findByPk(answerId);
