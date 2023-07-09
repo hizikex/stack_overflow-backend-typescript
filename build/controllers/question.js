@@ -26,10 +26,9 @@ const createQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
             tagId: Number(tagId)
         };
         const tagObj = yield tag_1.default.findByPk(tagId);
-        console.log(tagObj);
         if (tagObj) {
             const createdQuestion = yield question_1.default.create(questionData);
-            if (!exports.createQuestion) {
+            if (!createdQuestion) {
                 res.status(400).json({
                     message: `Bad Request`
                 });
@@ -56,7 +55,7 @@ const getQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const { questionId } = req.params;
         //Find the question by the id
-        const question = yield question_1.default.findByPk(questionId, { attributes: ['title', 'authorId', 'tagId'] });
+        const question = yield question_1.default.findByPk(questionId, { attributes: ['title', 'authorId', 'upvotes', 'downvotes', 'rating', 'tagId'] });
         if (!question) {
             res.status(404).json({
                 success: false,
@@ -79,7 +78,7 @@ const getQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getQuestion = getQuestion;
 const getAllQuestions = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const allQuestions = yield question_1.default.findAll({ attributes: ['id', 'title', 'body', 'authorId', 'tagId'] });
+        const allQuestions = yield question_1.default.findAll({ attributes: ['id', 'title', 'body', 'authorId', 'upvotes', 'downvotes', 'rating', 'tagId'] });
         console.log(allQuestions);
         if (!allQuestions) {
             res.status(404).json({

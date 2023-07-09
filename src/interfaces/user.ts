@@ -7,6 +7,7 @@ interface UserTraits {
     token: string;
     location: string;
     isVerify: boolean;
+    reputation: number;
     createdAt: Date,
     updatedAt: Date
 }

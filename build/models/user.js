@@ -44,6 +44,11 @@ User.init({
         allowNull: false,
         defaultValue: false
     },
+    reputation: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+    },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
@@ -56,7 +61,8 @@ User.init({
     }
 }, {
     sequelize: config_1.default,
-    modelName: 'users'
+    modelName: 'User',
+    tableName: 'users'
 });
 // // Synchronize the model with the database
 // User.sync()

@@ -1,4 +1,4 @@
-import { searchTags } from "../controllers/searchResult";
+import { searchTags } from "../controllers/searchedResult";
 import { createTag, deleteTag, getAllTag, getTag, updateTag } from "../controllers/tag";
 import express from 'express';
 

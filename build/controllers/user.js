@@ -53,7 +53,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         newUser.token = userToken;
         yield newUser.save();
         const verifyLink = `${req.protocol}://${req.get("host")}/api/verifyUser/${newUser.id}`;
-        const message = `Thanks for registering on stack overflow. Please click on this link ${verifyLink} to verify your account`;
+        const message = `<strong>Thanks for registering on stack overflow. Please click on this link ${verifyLink} to verify your account</strong>`;
         (0, mailer_1.default)({
             email: newUser.email,
             subject: 'Verification on stack overflow',

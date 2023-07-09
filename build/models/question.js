@@ -30,6 +30,21 @@ Question.init({
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
     },
+    upvotes: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
+    downvotes: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
+    rating: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
     tagId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: true,
@@ -50,7 +65,8 @@ Question.init({
     }
 }, {
     sequelize: config_1.default,
-    modelName: 'questions',
+    modelName: 'Question',
+    tableName: `questions`,
     indexes: [
         {
             fields: ['body']

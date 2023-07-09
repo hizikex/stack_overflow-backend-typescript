@@ -7,6 +7,9 @@ interface QuestionTraits {
     authorId: number;
     // tagId: TagTraits[];
     tagId: number;
+    upvotes: number;
+    downvotes: number;
+    rating: number;
     createdAt: Date;
     updatedAt: Date;
 }

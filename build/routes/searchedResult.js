@@ -4,10 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const answer_1 = require("../controllers/answer");
+const searchedResult_1 = require("../controllers/searchedResult");
 const Router = express_1.default.Router();
-Router.post('/questions/:questionId/answers', answer_1.createAnswer);
-Router.get('/questions/:questionId/answers', answer_1.getAnswersByQuestionId);
-Router.patch('/answers/:answerId', answer_1.updateAnswer);
-Router.delete('/answers/:answerId', answer_1.deleteAnswer);
+Router.get('/answers/search', searchedResult_1.searchAnswers);
+Router.get('/questions/searchresult', searchedResult_1.searchQuestions);
 exports.default = Router;

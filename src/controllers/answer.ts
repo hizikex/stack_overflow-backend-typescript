@@ -58,7 +58,10 @@ export const getAnswersByQuestionId = async (req: Request, res: Response) => {
             const answeredQuestionById = await Answer.findAll({where: { id: questionId},attributes: [
                 'id',
                 'body',
-                'questionId'
+                'upvotes',
+                'downvotes',
+                'rating',
+                'questionId',
             ]});
             if ( !answeredQuestionById ) {
                 res.status(404).json({
@@ -77,29 +80,6 @@ export const getAnswersByQuestionId = async (req: Request, res: Response) => {
         });
     };
 };
-
-export const getAnswerUsingIndex = async (req:Request, res: Response) => {
-    try {
-        const {body} = req.query;
-        const indexResult = await Answer.findAll({i});
-        console.log(indexResult);
-        
-        if (!indexResult) {
-            res.status(404).json({
-                message: `Result not found`
-            })
-        } else {
-            res.status(200).json({
-                message: `Searched result`,
-                data: indexResult
-            })
-        }
-    } catch (error) {
-        res.status(500).json({
-            message: `Internal Server error, ${error}`
-        })
-    }
-}
 
 export const updateAnswer = async (req:Request, res: Response) => {
     const {answerId} = req.params;
@@ -160,4 +140,4 @@ export const deleteAnswer = async (req: Request, res: Response) => {
             message: `Error deleting answer, ${error}`
         })
     }
-}
+};

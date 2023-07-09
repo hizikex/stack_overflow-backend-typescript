@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAnswer = exports.updateAnswer = exports.getAnswerUsingIndex = exports.getAnswersByQuestionId = exports.createAnswer = void 0;
+exports.deleteAnswer = exports.updateAnswer = exports.getAnswersByQuestionId = exports.createAnswer = void 0;
 const question_1 = __importDefault(require("../models/question"));
 const answer_1 = __importDefault(require("../models/answer"));
 const createAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -66,7 +66,10 @@ const getAnswersByQuestionId = (req, res) => __awaiter(void 0, void 0, void 0, f
             const answeredQuestionById = yield answer_1.default.findAll({ where: { id: questionId }, attributes: [
                     'id',
                     'body',
-                    'questionId'
+                    'upvotes',
+                    'downvotes',
+                    'rating',
+                    'questionId',
                 ] });
             if (!answeredQuestionById) {
                 res.status(404).json({
@@ -90,30 +93,6 @@ const getAnswersByQuestionId = (req, res) => __awaiter(void 0, void 0, void 0, f
     ;
 });
 exports.getAnswersByQuestionId = getAnswersByQuestionId;
-const getAnswerUsingIndex = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { body } = req.query;
-        const indexResult = yield answer_1.default.findAll({ i });
-        console.log(indexResult);
-        if (!indexResult) {
-            res.status(404).json({
-                message: `Result not found`
-            });
-        }
-        else {
-            res.status(200).json({
-                message: `Searched result`,
-                data: indexResult
-            });
-        }
-    }
-    catch (error) {
-        res.status(500).json({
-            message: `Internal Server error, ${error}`
-        });
-    }
-});
-exports.getAnswerUsingIndex = getAnswerUsingIndex;
 const updateAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { answerId } = req.params;
     try {

@@ -82,7 +82,7 @@ export const searchTags = async (req: Request, res: Response) => {
         }
     } catch (error) {
         res.status(500).json({
-            message: `Unable to search for answers, ${error}`
+            message: `Unable to search for tags, ${error}`
         })
     }
 };

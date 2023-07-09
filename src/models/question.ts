@@ -4,7 +4,7 @@ import QuestionTraits from "../interfaces/question";
 import TagTraits from "../interfaces/tag";
 import Tag from "./tag";
 
-type QuestionTraitsCreation = Optional<QuestionTraits, 'id' | 'createdAt'| 'updatedAt' | 'tagId'>;
+type QuestionTraitsCreation = Optional<QuestionTraits, 'id' | 'createdAt'| 'updatedAt' |'upvotes'| 'downvotes'| 'rating'| 'tagId'>;
 
 //Define the Question model
 class Question extends Model <QuestionTraits, QuestionTraitsCreation>{
@@ -12,8 +12,12 @@ class Question extends Model <QuestionTraits, QuestionTraitsCreation>{
     public title!: string;
     public body!: string;
     public authorId!: string;
+    public upvotes!: number;
+    public downvotes!: number;
     public createdAt!: Date;
     public tags?: TagTraits[];
+
+    public rating!: number;
 
     public static associate(models: any): void {
         Question.belongsTo(models.Tag, { foreignKey: 'tagId' });
@@ -38,6 +42,21 @@ Question.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    upvotes: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
+    downvotes: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
+    rating: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
     tagId: {
         type: DataTypes.INTEGER,
         allowNull: true, // Make it non-nullable
@@ -58,7 +77,8 @@ Question.init({
     }
 }, {
     sequelize,
-    modelName: 'questions',
+    modelName: 'Question',
+    tableName: `questions`,
     indexes: [
         {
             fields: ['body']

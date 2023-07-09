@@ -1,9 +1,8 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import sequelize from '../config/config'
 import UserTraits from '../interfaces/user';
-import { v4 as uuidv4 } from 'uuid';
 
-type UserTraitsCreation = Optional<UserTraits, 'id' | 'token' | 'isVerify' |'createdAt' | 'updatedAt'>;
+type UserTraitsCreation = Optional<UserTraits, 'id' | 'token' | 'isVerify' |'reputation'| 'createdAt' | 'updatedAt'>;
 
 //Define the user Model
 class User extends Model <UserTraits, UserTraitsCreation>{
@@ -15,6 +14,7 @@ class User extends Model <UserTraits, UserTraitsCreation>{
     public token!: string;
     public location!: string;
     public isVerify!: boolean;
+    public reputation!: number;
     public createdAt!: Date;
     public updatedAt!: Date
 }
@@ -55,6 +55,11 @@ User.init({
         allowNull: false,
         defaultValue: false
     },
+    reputation: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+    },
     createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -67,7 +72,8 @@ User.init({
     }
 }, {
     sequelize,
-    modelName: 'users'
+    modelName: 'User',
+    tableName: 'users'
 })
 
 // // Synchronize the model with the database

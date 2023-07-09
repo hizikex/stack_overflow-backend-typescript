@@ -22,11 +22,9 @@ export const createQuestion = async (req:Request, res: Response) => {
         };
 
         const tagObj = await Tag.findByPk(tagId);
-        console.log(tagObj);
-        
         if (tagObj) {
             const createdQuestion = await Question.create(questionData)
-            if (!createQuestion) {
+            if (!createdQuestion) {
                 res.status(400).json({
                     message: `Bad Request`
                 })
@@ -52,7 +50,7 @@ export const getQuestion = async (req:Request, res:Response) => {
         const { questionId } = req.params;
 
         //Find the question by the id
-        const question = await Question.findByPk(questionId, {attributes: ['title', 'authorId', 'tagId']});
+        const question = await Question.findByPk(questionId, {attributes: ['title', 'authorId', 'upvotes', 'downvotes', 'rating', 'tagId']});
         if (!question) {
             res.status(404).json({
                 success: false,
@@ -73,7 +71,7 @@ export const getQuestion = async (req:Request, res:Response) => {
 
 export const getAllQuestions = async (req:Request, res: Response) => {
     try {
-        const allQuestions = await Question.findAll({attributes: ['id', 'title', 'body', 'authorId', 'tagId']});
+        const allQuestions = await Question.findAll({attributes: ['id', 'title', 'body', 'authorId', 'upvotes', 'downvotes', 'rating', 'tagId']});
         console.log(allQuestions);
         
         if (!allQuestions) {

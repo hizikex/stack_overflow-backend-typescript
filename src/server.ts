@@ -4,7 +4,9 @@ import express from "express";
 import userRoutes from './routes/user';
 import tagRoutes from './routes/tag';
 import questionRoutes from './routes/question';
-import answerRoutes from './routes/answer'
+import answerRoutes from './routes/answer';
+// import searchRoutes from './routes/searchedResult';
+import votingRoutes from './routes/voting';
 import sequelize from './config/config';
 
 const PORT = process.env.PORT;
@@ -15,6 +17,9 @@ app.use('/api/v1', userRoutes);
 app.use('/api/v1', tagRoutes);
 app.use('/api/v1', questionRoutes);
 app.use('/api/v1', answerRoutes);
+// app.use('/api/v1', searchRoutes);
+app.use('/api/v1', votingRoutes);
+
 
 sequelize.authenticate().then(()=> {
     console.log('Connection has been established successfully.');

@@ -33,6 +33,21 @@ Answer.init({
             key: 'id'
         }
     },
+    upvotes: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
+    downvotes: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
+    rating: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
@@ -46,7 +61,12 @@ Answer.init({
 }, {
     sequelize: config_1.default,
     modelName: "Answer",
-    tableName: 'answers'
+    tableName: 'answers',
+    indexes: [
+        {
+            fields: ['body']
+        }
+    ]
 });
 //Set up association between Answer and Question model
 Answer.belongsTo(question_1.default, {
