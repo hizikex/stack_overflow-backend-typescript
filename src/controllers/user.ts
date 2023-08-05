@@ -44,7 +44,7 @@ export const createUser = async (req: Request, res: Response) => {
 
         const verifyLink = `${req.protocol}://${req.get("host")}/api/verifyUser/${newUser.id}`;
 
-        const message = `<strong>Thanks for registering on stack overflow. Please click on this link ${verifyLink} to verify your account</strong>`;
+        const message = `Thanks for registering on stack overflow. Please click on this link ${verifyLink} to verify your account`;
 
         newUserMail({
             email: newUser.email,

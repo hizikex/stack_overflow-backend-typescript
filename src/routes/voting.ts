@@ -4,11 +4,11 @@ import { downvoteAnswer, downvoteQuestion, upvoteAnswer, upvoteQuestion } from '
 const Router = express.Router();
 
 //Voting Questions
-Router.patch('/questions/:questionId/upvote', upvoteQuestion);
-Router.patch('/questions/:questionId/downvote', downvoteQuestion);
+Router.patch('/questions/:questionId/:userId/upvote', upvoteQuestion);
+Router.patch('/questions/:questionId/:userId/downvote', downvoteQuestion);
 
 //Voting Answer
-Router.patch('/answers/:questionId/upvote', upvoteAnswer);
-Router.patch('/answers/:questionId/downvote', downvoteAnswer);
+Router.patch('/answers/:questionId/:userId/upvote', upvoteAnswer);
+Router.patch('/answers/:questionId/:userId/downvote', downvoteAnswer);
 
 export default Router;

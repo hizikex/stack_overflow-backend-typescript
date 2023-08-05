@@ -15,8 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.downvoteAnswer = exports.upvoteAnswer = exports.downvoteQuestion = exports.upvoteQuestion = void 0;
 const question_1 = __importDefault(require("../models/question"));
 const answer_1 = __importDefault(require("../models/answer"));
+const user_1 = __importDefault(require("../models/user"));
 const upvoteQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { questionId } = req.params;
+    const { userId } = req.params;
     try {
         const question = yield question_1.default.findByPk(questionId);
         if (!question) {
@@ -30,22 +32,30 @@ const upvoteQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function*
             question.save();
             question.rating = question.upvotes - question.downvotes;
             question.save();
+            const user = yield user_1.default.findByPk(userId);
+            if (user) {
+                user.reputation += 1;
+                yield user.save();
+            }
             res.status(200).json({
                 status: true,
-                upvote: question.upvotes++,
-                rate: question.rating
+                upvote: question.upvotes,
+                downvotes: question.downvotes,
+                rate: question.rating,
+                userReputation: user.reputation
             });
         }
     }
     catch (error) {
         res.status(500).json({
-            message: `Internal server error, ${error}`
+            message: `Failed to upvote question, ${error}`
         });
     }
 });
 exports.upvoteQuestion = upvoteQuestion;
 const downvoteQuestion = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { questionId } = req.params;
+    const { userId } = req.params;
     try {
         const question = yield question_1.default.findByPk(questionId);
         if (!question) {
@@ -59,22 +69,31 @@ const downvoteQuestion = (req, res) => __awaiter(void 0, void 0, void 0, functio
             question.save();
             question.rating = question.upvotes - question.downvotes;
             question.save();
+            const user = yield user_1.default.findByPk(userId);
+            if (user) {
+                user.reputation += 1;
+                yield user.save();
+            }
+            ;
             res.status(200).json({
                 status: true,
-                downvote: question.downvotes++,
-                rate: question.rating
+                upvotes: question.upvotes,
+                downvotes: question.downvotes,
+                rate: question.rating,
+                userReputation: user.reputation
             });
         }
     }
     catch (error) {
         res.status(500).json({
-            message: `Internal server error, ${error}`
+            message: `IFailed to upvote question, ${error}`
         });
     }
 });
 exports.downvoteQuestion = downvoteQuestion;
 const upvoteAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { answerId } = req.params;
+    const { userId } = req.params;
     try {
         const answer = yield answer_1.default.findByPk(answerId);
         if (!answer) {
@@ -88,22 +107,31 @@ const upvoteAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             answer.save();
             answer.rating = answer.upvotes - answer.downvotes;
             answer.save();
+            const user = yield user_1.default.findByPk(userId);
+            if (user) {
+                user.reputation += 1;
+                yield user.save();
+            }
+            ;
             res.status(200).json({
                 status: true,
-                upvote: answer.upvotes++,
-                rate: answer.rating
+                upvotes: answer.upvotes,
+                downvotes: answer.downvotes,
+                rate: answer.rating,
+                reputation: user.reputation
             });
         }
     }
     catch (error) {
         res.status(500).json({
-            message: `Internal server error, ${error}`
+            message: `Failed to upvote question, ${error}`
         });
     }
 });
 exports.upvoteAnswer = upvoteAnswer;
 const downvoteAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { answerId } = req.params;
+    const { userId } = req.params;
     try {
         const answer = yield answer_1.default.findByPk(answerId);
         if (!answer) {
@@ -116,26 +144,25 @@ const downvoteAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function*
             const downvote = answer.downvotes++;
             const rating = answer.upvotes - downvote;
             answer.save();
+            const user = yield user_1.default.findByPk(userId);
+            if (user) {
+                user.reputation += 1;
+                yield user.save();
+            }
+            ;
             res.status(200).json({
                 status: true,
-                downvote: answer.downvotes++,
-                rate: rating
+                upvote: answer.upvotes,
+                downvote: answer.downvotes,
+                rate: rating,
+                reputation: user.reputation
             });
         }
     }
     catch (error) {
         res.status(500).json({
-            message: `Internal server error, ${error}`
+            message: `Failed to upvote question, ${error}`
         });
     }
 });
 exports.downvoteAnswer = downvoteAnswer;
-// export const ratingQuestion = async (req: Request, res: Response) => {
-//     const {questionId} = req.params;
-//     const question = await Question.findByPk(questionId);
-//     if (!question) {
-//         res.status(404).json({
-//             message: `Question with id: ${questionId} not found`
-//         })
-//     }
-// }

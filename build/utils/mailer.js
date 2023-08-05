@@ -29,7 +29,7 @@ const newUserMail = (options) => __awaiter(void 0, void 0, void 0, function* () 
         from: process.env.USER,
         to: options.email,
         subject: options.subject,
-        text: options.message
+        text: options.message,
     };
     yield transporter.sendMail(mailOptions);
 });

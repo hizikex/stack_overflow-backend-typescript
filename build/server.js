@@ -10,7 +10,7 @@ const user_1 = __importDefault(require("./routes/user"));
 const tag_1 = __importDefault(require("./routes/tag"));
 const question_1 = __importDefault(require("./routes/question"));
 const answer_1 = __importDefault(require("./routes/answer"));
-// import searchRoutes from './routes/searchedResult';
+const notifications_1 = __importDefault(require("./routes/notifications"));
 const voting_1 = __importDefault(require("./routes/voting"));
 const config_1 = __importDefault(require("./config/config"));
 const PORT = process.env.PORT;
@@ -20,7 +20,7 @@ app.use('/api/v1', user_1.default);
 app.use('/api/v1', tag_1.default);
 app.use('/api/v1', question_1.default);
 app.use('/api/v1', answer_1.default);
-// app.use('/api/v1', searchRoutes);
+app.use('/api/v1', notifications_1.default);
 app.use('/api/v1', voting_1.default);
 config_1.default.authenticate().then(() => {
     console.log('Connection has been established successfully.');

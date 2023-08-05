@@ -5,7 +5,7 @@ import userRoutes from './routes/user';
 import tagRoutes from './routes/tag';
 import questionRoutes from './routes/question';
 import answerRoutes from './routes/answer';
-// import searchRoutes from './routes/searchedResult';
+import notificationRoutes from './routes/notifications';
 import votingRoutes from './routes/voting';
 import sequelize from './config/config';
 
@@ -17,7 +17,7 @@ app.use('/api/v1', userRoutes);
 app.use('/api/v1', tagRoutes);
 app.use('/api/v1', questionRoutes);
 app.use('/api/v1', answerRoutes);
-// app.use('/api/v1', searchRoutes);
+app.use('/api/v1', notificationRoutes);
 app.use('/api/v1', votingRoutes);
 
 
